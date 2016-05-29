@@ -29,7 +29,7 @@
     "yargs": "^4.7.1"
   },
   "dependencies": {
-    "@spicypixel-private/core-kit-js": "~0.0.6",
+    "@spicypixel-private/core-kit-js": ">0.0.6",
     "bluebird": "^3.4.0",
     "fs-extra": "^0.30.0"
   },
