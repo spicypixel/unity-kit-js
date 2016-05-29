@@ -29,6 +29,7 @@
     "yargs": "^1.3.1"
   },
   "dependencies": {
+    "@spicypixel-private/core-kit-js": "^0.0.0",
     "bluebird": "^3.4.0",
     "mkdirp": "^0.5.1"
   },
