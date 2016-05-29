@@ -1,11 +1,10 @@
 import * as Bluebird from "bluebird";
 import * as path from "path";
-import * as mkdirp from "mkdirp";
 import { UnityEditor } from "./unity-editor";
-import { ChildProcess } from "@spicypixel-private/core-kit-js/dist/lib/child-process";
+import { ChildProcess } from "@spicypixel-private/core-kit-js/lib/child-process";
 
-import * as fsn from "fs";
-let fs = Bluebird.promisifyAll(fsn);
+import * as fsBase from "fs-extra";
+let fs = <any>Bluebird.promisifyAll(fsBase);
 
 declare var pathExists: any;
 
@@ -28,7 +27,7 @@ export class UnityProject {
   }
 
   packageAsync(sourcePaths: string[], outputPath: string): Promise<any> {
-    mkdirp.sync(path.dirname(outputPath));
+    fs.mkdirpSync(path.dirname(outputPath));
 
     let args = UnityEditor.batchModeArgs;
     args = args.concat(this.projectPathArgs);

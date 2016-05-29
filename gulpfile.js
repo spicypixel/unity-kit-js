@@ -12,8 +12,8 @@ var gulpif = require("gulp-if");
 // Streams and process
 var eventStream = require("event-stream");
 var argv = require("yargs").argv;
-
 var sourcemaps = require("gulp-sourcemaps");
+let fs = require("fs-extra");
 
 // Tools
 var ts = require("gulp-typescript");
@@ -62,12 +62,12 @@ gulp.task("tsc", function() {
     .on("error", onError);
 
   var dtsResult = tscResult.dts
-    .pipe(gulp.dest("./dist"))
+    .pipe(gulp.dest("./"))
     .on("error", onError);
     
   var jsResult = tscResult.js
     .pipe(gulpif(!argv.release, sourcemaps.write("./", {includeContent: true, sourceRoot: "src/lib/"}))) // source files under this root
-    .pipe(gulp.dest("./dist"))
+    .pipe(gulp.dest("./"))
     .on("error", onError);
   
   return eventStream.merge(lintResult, jsResult, dtsResult);
@@ -85,6 +85,11 @@ gulp.task("default", ["test"], function() {
 });
 
 gulp.task("test", ["build"], function() {
-  return gulp.src("./dist/test/**/*.js", {read: false})
+  return gulp.src("./test/**/*.js", {read: false})
 		.pipe(mocha());
+});
+
+gulp.task("clean", function() {
+  fs.remove("lib");
+  fs.remove("test");
 });
