@@ -1,8 +1,11 @@
 {
-  "name": "spicypixel-unity-kit-js",
+  "name": "@spicypixel-private/unity-kit-js",
   "version": "0.0.0",
   "description": "Spicy Pixel Unity Kit for JS",
   "main": "./lib/index.js",
+  "publishConfig": {
+    "registry": "http://npm.private:4873"
+  },
   "scripts": {
     "postinstall": "typings install && gulp install",
     "build": "gulp build",
