@@ -16,11 +16,12 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "@spicypixel-private/core-kit-js": ">0.0.6",
+    "@spicypixel-private/core-kit-js": ">=0.0.10",
     "bluebird": "^3.4.0",
-    "fs-extra": "^0.30.0",
     "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
     "event-stream": "^3.1.7",
+    "fs-extra": "^0.30.0",
     "gulp": "^3.8.8",
     "gulp-if": "^2.0.1",
     "gulp-mocha": "^2.2.0",
@@ -29,7 +30,6 @@
     "gulp-typescript": "^2.0.0",
     "gulp-util": "^3.0.1",
     "mocha": "^2.5.2",
-    "path-exists": "^3.0.0",
     "tslint": "^3.10.2",
     "typings": "^1.0.4",
     "yargs": "^4.7.1"
