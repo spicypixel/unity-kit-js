@@ -19,4 +19,12 @@ export class UnityEditor {
 
     throw new Error("Unsupported OS");
   }
+
+  static get batchModeArgs(): string[] {
+    return [
+      "-batchmode",
+      "-nographics",
+      "-quit"
+    ];
+  }
 }

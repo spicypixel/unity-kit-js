@@ -20,17 +20,19 @@ export class UnityProject {
     return this._projectPath;
   }
 
+  get projectPathArgs(): string[] {
+    return [
+      "-projectPath",
+      this._projectPath,
+    ];
+  }
+
   packageAsync(sourcePaths: string[], outputPath: string): Promise<any> {
     mkdirp.sync(path.dirname(outputPath));
 
-    let args = [
-      "-batchmode",
-      "-nographics",
-      "-quit",
-      "-projectPath",
-      this._projectPath,
-      "-exportPackage"
-    ];
+    let args = UnityEditor.batchModeArgs;
+    args = args.concat(this.projectPathArgs);
+    args = args.concat("-exportPackage");
     args = args.concat(sourcePaths);
     args = args.concat(outputPath);
 
