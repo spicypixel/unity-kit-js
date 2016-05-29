@@ -26,7 +26,22 @@ export class UnityProject {
     ];
   }
 
+  createAsync(): Promise<any> {
+    fs.mkdirpSync(path.dirname(this._projectPath));
+
+    let args = UnityEditor.batchModeArgs;
+    args = args.concat("-createProject");
+    args = args.concat(this._projectPath);
+
+    return ChildProcess.spawnAsync(UnityEditor.editorPath, args).catch((err) => {
+      console.log("ERROR Spawning: " + UnityEditor.editorPath + " " + args.join(" "));
+      throw err;
+    });
+  }
+
   packageAsync(sourcePaths: string[], outputPath: string): Promise<any> {
+    this.verifyProjectExists();
+
     fs.mkdirpSync(path.dirname(outputPath));
 
     let args = UnityEditor.batchModeArgs;
@@ -36,5 +51,10 @@ export class UnityProject {
     args = args.concat(outputPath);
 
     return ChildProcess.spawnAsync(UnityEditor.editorPath, args);
+  }
+
+  private verifyProjectExists(): void {
+    if (!fs.existsSync(this.projectPath))
+      throw new Error("Project path does not exist");
   }
 }
