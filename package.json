@@ -1,6 +1,6 @@
 {
   "name": "@spicypixel-private/unity-kit-js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Spicy Pixel Unity Kit for JS",
   "main": "./lib/index.js",
   "publishConfig": {
@@ -14,8 +14,7 @@
   },
   "author": "Spicy Pixel, Inc. (http://spicypixel.com)",
   "license": "MIT",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
     "@spicypixel-private/core-kit-js": ">0.0.6",
     "bluebird": "^3.4.0",
