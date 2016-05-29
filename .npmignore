@@ -1,5 +1,6 @@
 .vscode/
 .idea/
 bower_components/
-lib/
-test/
+/lib/
+/test/
+test-output/
