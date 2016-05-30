@@ -1,7 +1,7 @@
 import * as Bluebird from "bluebird";
 import * as path from "path";
 import { UnityEditor } from "./unity-editor";
-import { ChildProcess } from "@spicypixel-private/core-kit-js/lib/child-process";
+import ChildProcess from "@spicypixel-private/core-kit-js/lib/child-process";
 
 import * as fsBase from "fs-extra";
 let fs = <any>Bluebird.promisifyAll(fsBase);
