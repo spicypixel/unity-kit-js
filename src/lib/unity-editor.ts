@@ -1,21 +1,30 @@
+import { Platform } from "@spicypixel-private/core-kit-js/lib/platform";
+
 export class UnityEditor {
   constructor() {
     throw new Error("This class is static and not meant to be constructed");
   }
 
   static get editorPath(): string {
-    let isWin = /^win/.test(process.platform);
-    let isMac = /^darwin/.test(process.platform);
-    let is64 = (process.arch === "x64" || process.env.hasOwnProperty("PROCESSOR_ARCHITEW6432"));
+    let info = Platform.info;
 
-    if (isMac)
+    if (info.isMac)
       return "/Applications/Unity/Unity.app/Contents/MacOS/Unity";
 
-    if (isWin && is64)
+    if (info.isWin && info.is64Bit)
       return "C:\\Program Files\\Unity\\Editor\\Unity.exe";
 
-    if (isWin && !is64)
+    if (info.isWin && !info.is64Bit)
       return "C:\\Program Files (x86)\\Unity\\Editor\\Unity.exe";
+
+    throw new Error("Unsupported OS");
+  }
+
+  static get enginePath(): string {
+    let info = Platform.info;
+
+    if (info.isMac)
+      return "/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll";
 
     throw new Error("Unsupported OS");
   }

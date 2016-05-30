@@ -6,7 +6,7 @@ let should = chai.should();
 
 describe ("UnityEditor", () => {
   it ("should be installed", () => {
-    let editorPath = UnityEditor.editorPath;
-    fs.existsSync(editorPath).should.be.true;
+    fs.existsSync(UnityEditor.editorPath).should.be.true;
+    fs.existsSync(UnityEditor.enginePath).should.be.true;
   });
 });
