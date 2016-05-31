@@ -12,7 +12,7 @@ describe("UnityProject", () => {
   let unityProject: UnityProject;
 
   before(function () {
-    this.timeout(15000); // requires function cb for this
+    this.timeout(30000); // requires function cb for this
     unityProject = new UnityProject(path.join(testOutputPath, "unity-test-project"));
     fs.removeSync(unityProject.projectPath);
     return unityProject.createAsync().should.be.fulfilled;
@@ -27,7 +27,7 @@ describe("UnityProject", () => {
   });
 
   it("should create a package", function () {
-    this.timeout(15000); // requires function cb for this
+    this.timeout(30000); // requires function cb for this
     let assetsPath = path.join(unityProject.projectPath, "Assets");
     fs.mkdirpSync(path.join(assetsPath, "TestFolder1"));
     fs.mkdirpSync(path.join(assetsPath, "TestFolder2"));
