@@ -4,8 +4,8 @@ import * as gulp from "gulp";
 import { TypeScriptBuilder, MochaRunner } from "@spicypixel-private/build-kit-js";
 import * as fs from "@spicypixel-private/core-kit-js/lib/file-system";
 
-function clean() {
-  return fs.removePatternsAsync(["lib", "test", "test-output"]);
+async function clean() {
+  await fs.removePatternsAsync(["lib", "test", "test-output"]);
 }
 
 async function build() {
