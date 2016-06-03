@@ -1,18 +1,24 @@
 {
   "compilerOptions": {
+    "allowJs": false,
     "declaration": true,
     "module": "umd",
     "moduleResolution": "node",
+    "noEmitOnError": true,
     "noImplicitAny": true,
+    "noResolve": false,
     "outDir": "./",
     "preserveConstEnums": true,
     "removeComments": false,
     "rootDir": "./src",
+    "sourceRoot": "../src",
     "sourceMap": true,
-    "target": "es5"
+    "target": "es6"
   },
   "exclude": [
+    "gulpfile.ts",
     "node_modules",
-    "dist"
+    "lib",
+    "test"
   ]
 }

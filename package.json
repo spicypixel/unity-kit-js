@@ -16,6 +16,7 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
+    "@spicypixel-private/build-kit-js": ">=0.0.14",
     "@spicypixel-private/core-kit-js": ">=0.0.10",
     "bluebird": "^3.4.0",
     "chai": "^3.5.0",
