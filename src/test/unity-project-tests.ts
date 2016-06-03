@@ -2,8 +2,8 @@ import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import * as path from "path";
 import * as fsn from "fs";
-import { UnityProject } from "../lib/unity-project";
 import * as fs from "@spicypixel-private/core-kit-js/lib/file-system";
+import UnityProject from "../lib/unity-project";
 
 let should = chai.should();
 chai.use(chaiAsPromised);

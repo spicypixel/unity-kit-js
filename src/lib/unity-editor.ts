@@ -1,6 +1,6 @@
 import { OperatingSystemProvider, Platform, Architecture } from "@spicypixel-private/core-kit-js/lib/operating-system";
 
-export class UnityEditor {
+export default class UnityEditor {
   constructor() {
     throw new Error("This class is static and not meant to be constructed");
   }
