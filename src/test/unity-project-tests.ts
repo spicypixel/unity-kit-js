@@ -1,8 +1,9 @@
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
-import { UnityProject } from "../lib/unity-project";
 import * as path from "path";
-import * as fs from "fs-extra";
+import * as fsn from "fs";
+import { UnityProject } from "../lib/unity-project";
+import * as fs from "@spicypixel-private/core-kit-js/lib/file-system";
 
 let should = chai.should();
 chai.use(chaiAsPromised);
@@ -11,34 +12,37 @@ describe("UnityProject", () => {
   let testOutputPath = path.join(__dirname, "..", "test-output");
   let unityProject: UnityProject;
 
-  before(function () {
+  before(async function () {
     this.timeout(30000); // requires function cb for this
     unityProject = new UnityProject(path.join(testOutputPath, "unity-test-project"));
-    fs.removeSync(unityProject.projectPath);
+    await fs.removePatternsAsync(unityProject.projectPath);
     return unityProject.createAsync().should.be.fulfilled;
   });
 
   after(() => {
-    // fs.removeSync(unityProject.projectPath);
+    // await fs.removePatternsAsync(unityProject.projectPath);
   });
 
   it("should have created project", function () {
-    fs.existsSync(unityProject.projectPath).should.be.true;
+    fs.FileSystemRecord.accessAsync(unityProject.projectPath,
+      fs.FileSystemPermission.Visible).should.eventually.be.fulfilled;
   });
 
-  it("should create a package", function () {
+  it("should create a package", async function () {
     this.timeout(30000); // requires function cb for this
     let assetsPath = path.join(unityProject.projectPath, "Assets");
-    fs.mkdirpSync(path.join(assetsPath, "TestFolder1"));
-    fs.mkdirpSync(path.join(assetsPath, "TestFolder2"));
-    fs.mkdirpSync(path.join(assetsPath, "TestFolder3"));
-    fs.writeFileSync(path.join(assetsPath, "TestFolder1", "TestFile1.txt"), "Test1");
-    fs.writeFileSync(path.join(assetsPath, "TestFolder2", "TestFile2.txt"), "Test2");
-    fs.writeFileSync(path.join(assetsPath, "TestFolder3", "TestFile3.txt"), "Test3");
+    await fs.Directory.createRecursiveAsync(path.join(assetsPath, "TestFolder1"));
+    await fs.Directory.createRecursiveAsync(path.join(assetsPath, "TestFolder2"));
+    await fs.Directory.createRecursiveAsync(path.join(assetsPath, "TestFolder3"));
+    fsn.writeFileSync(path.join(assetsPath, "TestFolder1", "TestFile1.txt"), "Test1");
+    fsn.writeFileSync(path.join(assetsPath, "TestFolder2", "TestFile2.txt"), "Test2");
+    fsn.writeFileSync(path.join(assetsPath, "TestFolder3", "TestFile3.txt"), "Test3");
 
     let packagePath = path.join(testOutputPath, "unity-test-project.unitypackage");
-    return unityProject.packageAsync(["Assets/TestFolder1", "Assets/TestFolder2"],
-      packagePath)
-      .then(() => fs.existsSync(packagePath).should.be.true);
+    await unityProject.packageAsync(["Assets/TestFolder1", "Assets/TestFolder2"],
+      packagePath);
+
+    await fs.FileSystemRecord.accessAsync(packagePath,
+      fs.FileSystemPermission.Visible).should.eventually.be.fulfilled;
   });
 });

@@ -2,9 +2,7 @@ import Promise from "@spicypixel-private/core-kit-js/lib/promise";
 import * as path from "path";
 import { UnityEditor } from "./unity-editor";
 import ChildProcess from "@spicypixel-private/core-kit-js/lib/child-process";
-
-import * as fsBase from "fs-extra";
-let fs = <any>Promise.promisifyAll(fsBase);
+import * as fs from "@spicypixel-private/core-kit-js/lib/file-system";
 
 declare var pathExists: any;
 
@@ -26,23 +24,23 @@ export class UnityProject {
     ];
   }
 
-  createAsync(): Promise<any> {
-    fs.mkdirpSync(path.dirname(this._projectPath));
+  async createAsync(): Promise<any> {
+    await fs.Directory.createRecursiveAsync(path.dirname(this._projectPath));
 
     let args = UnityEditor.batchModeArgs;
     args = args.concat("-createProject");
     args = args.concat(this._projectPath);
 
-    return ChildProcess.spawnAsync(UnityEditor.editorPath, args).catch((err) => {
+    await ChildProcess.spawnAsync(UnityEditor.editorPath, args).catch((err) => {
       console.log("ERROR Spawning: " + UnityEditor.editorPath + " " + args.join(" "));
       throw err;
     });
   }
 
-  packageAsync(sourcePaths: string[], outputPath: string): Promise<any> {
-    this.verifyProjectExists();
+  async packageAsync(sourcePaths: string[], outputPath: string): Promise<any> {
+    await this.verifyProjectExistsAsync();
 
-    fs.mkdirpSync(path.dirname(outputPath));
+    await fs.Directory.createRecursiveAsync(path.dirname(outputPath));
 
     let args = UnityEditor.batchModeArgs;
     args = args.concat(this.projectPathArgs);
@@ -50,11 +48,14 @@ export class UnityProject {
     args = args.concat(sourcePaths);
     args = args.concat(outputPath);
 
-    return ChildProcess.spawnAsync(UnityEditor.editorPath, args);
+    await ChildProcess.spawnAsync(UnityEditor.editorPath, args);
   }
 
-  private verifyProjectExists(): void {
-    if (!fs.existsSync(this.projectPath))
-      throw new Error("Project path does not exist");
+  private async verifyProjectExistsAsync(): Promise<any> {
+    try {
+      await fs.FileSystemRecord.accessAsync(this._projectPath, fs.FileSystemPermission.Visible);
+    } catch (err) {
+      throw new Error("Project path does not exist: " + err.message);
+    }
   }
 }
