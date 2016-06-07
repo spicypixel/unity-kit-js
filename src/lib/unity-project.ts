@@ -1,7 +1,7 @@
-import Promise from "@spicypixel-private/core-kit-js/lib/promise";
+import Promise from "@spicypixel/core-kit-js/lib/promise";
 import * as path from "path";
-import * as fs from "@spicypixel-private/core-kit-js/lib/file-system";
-import ChildProcess from "@spicypixel-private/core-kit-js/lib/child-process";
+import * as fs from "@spicypixel/core-kit-js/lib/file-system";
+import ChildProcess from "@spicypixel/core-kit-js/lib/child-process";
 import UnityEditor from "./unity-editor";
 
 declare var pathExists: any;
@@ -17,7 +17,7 @@ export default class UnityProject {
     return this._projectPath;
   }
 
-  get projectPathArgs(): string[] {
+  private get projectPathArgs(): string[] {
     return [
       "-projectPath",
       this._projectPath,

@@ -1,8 +1,8 @@
 "use strict";
 
 import * as gulp from "gulp";
-import { TypeScriptBuilder, MochaRunner } from "@spicypixel-private/build-kit-js";
-import * as fs from "@spicypixel-private/core-kit-js/lib/file-system";
+import { TypeScriptBuilder, MochaRunner } from "@spicypixel/build-kit-js";
+import * as fs from "@spicypixel/core-kit-js/lib/file-system";
 
 async function clean() {
   await fs.removePatternsAsync(["lib", "test", "test-output"]);

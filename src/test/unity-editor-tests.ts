@@ -1,5 +1,5 @@
 import * as chai from "chai";
-import * as fs from "@spicypixel-private/core-kit-js/lib/file-system";
+import * as fs from "@spicypixel/core-kit-js/lib/file-system";
 import UnityEditor from "../lib/unity-editor";
 
 let should = chai.should();

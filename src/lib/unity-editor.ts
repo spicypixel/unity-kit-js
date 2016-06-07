@@ -1,4 +1,4 @@
-import { OperatingSystemProvider, Platform, Architecture } from "@spicypixel-private/core-kit-js/lib/operating-system";
+import { OperatingSystemProvider, Platform, Architecture } from "@spicypixel/core-kit-js/lib/operating-system";
 
 export default class UnityEditor {
   constructor() {

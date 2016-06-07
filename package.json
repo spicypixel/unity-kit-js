@@ -1,10 +1,10 @@
 {
-  "name": "@spicypixel-private/unity-kit-js",
+  "name": "@spicypixel/unity-kit-js",
   "version": "0.0.14",
   "description": "Spicy Pixel Unity Kit JS",
   "main": "./lib/index.js",
-  "publishConfig": {
-    "registry": "http://npm.private:4873"
+  "typings": {
+    "definition": "./lib/index.d.ts"
   },
   "scripts": {
     "prepublish": "gulp clean && gulp test",
@@ -18,26 +18,13 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "@spicypixel-private/build-kit-js": ">=0.0.14",
-    "@spicypixel-private/core-kit-js": ">=0.0.10",
-    "bluebird": "^3.4.0",
+    "@spicypixel/build-kit-js": ">=0.0.14",
+    "@spicypixel/core-kit-js": ">=0.0.10",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
-    "event-stream": "^3.1.7",
-    "fs-extra": "^0.30.0",
     "gulp": "^3.8.8",
-    "gulp-if": "^2.0.1",
-    "gulp-mocha": "^2.2.0",
-    "gulp-sourcemaps": "^1.1.4",
-    "gulp-tslint": "^5.0.0",
-    "gulp-typescript": "^2.0.0",
     "gulp-util": "^3.0.1",
     "mocha": "^2.5.2",
-    "tslint": "^3.10.2",
-    "typings": "^1.0.4",
-    "yargs": "^4.7.1"
-  },
-  "typings": {
-    "definition": "./lib/index.d.ts"
+    "typings": "^1.0.4"
   }
 }
