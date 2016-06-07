@@ -1,6 +1,6 @@
 {
   "name": "@spicypixel/unity-kit-js",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Spicy Pixel Unity Kit JS",
   "main": "./lib/index.js",
   "typings": {
