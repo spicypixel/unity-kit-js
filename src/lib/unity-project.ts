@@ -24,7 +24,7 @@ export default class UnityProject {
     ];
   }
 
-  async createAsync(): Promise<any> {
+  async createAsync(): Promise<void> {
     await fs.Directory.createRecursiveAsync(path.dirname(this._projectPath));
 
     let args = UnityEditor.batchModeArgs;
@@ -37,7 +37,7 @@ export default class UnityProject {
     });
   }
 
-  async packageAsync(sourcePaths: string[], outputPath: string): Promise<any> {
+  async packageAsync(sourcePaths: string[], outputPath: string): Promise<void> {
     await this.verifyProjectExistsAsync();
 
     await fs.Directory.createRecursiveAsync(path.dirname(outputPath));
@@ -51,7 +51,7 @@ export default class UnityProject {
     await ChildProcess.spawnAsync(UnityEditor.editorPath, args);
   }
 
-  private async verifyProjectExistsAsync(): Promise<any> {
+  private async verifyProjectExistsAsync(): Promise<void> {
     try {
       await fs.FileSystemRecord.accessAsync(this._projectPath, fs.FileSystemPermission.Visible);
     } catch (err) {

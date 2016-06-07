@@ -19,7 +19,7 @@ export default class UnityEditor {
 export default class UnityProject {
     constructor(projectPath: string);
     projectPath: string;
-    createAsync(): Promise<any>;
-    packageAsync(sourcePaths: string[], outputPath: string): Promise<any>;
+    createAsync(): Promise<void>;
+    packageAsync(sourcePaths: string[], outputPath: string): Promise<void>;
 }
 ```
