@@ -31,10 +31,7 @@ export default class UnityProject {
     args = args.concat("-createProject");
     args = args.concat(this._projectPath);
 
-    await ChildProcess.spawnAsync(UnityEditor.editorPath, args).catch((err) => {
-      console.log("ERROR Spawning: " + UnityEditor.editorPath + " " + args.join(" "));
-      throw err;
-    });
+    await ChildProcess.spawnAsync(UnityEditor.editorPath, args, { stdio: ["pipe", "ignore", process.stderr] });
   }
 
   async packageAsync(sourcePaths: string[], outputPath: string): Promise<void> {
@@ -48,7 +45,7 @@ export default class UnityProject {
     args = args.concat(sourcePaths);
     args = args.concat(outputPath);
 
-    await ChildProcess.spawnAsync(UnityEditor.editorPath, args);
+    await ChildProcess.spawnAsync(UnityEditor.editorPath, args, { stdio: ["pipe", "ignore", process.stderr] });
   }
 
   private async verifyProjectExistsAsync(): Promise<void> {

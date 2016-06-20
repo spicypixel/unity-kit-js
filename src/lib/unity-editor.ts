@@ -36,6 +36,7 @@ export default class UnityEditor {
       "-batchmode",
       "-nographics",
       "-quit",
+      "-silent-crashes",
       "-logFile"
     ];
   }
