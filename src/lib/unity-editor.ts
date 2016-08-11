@@ -26,7 +26,7 @@ export default class UnityEditor {
     let arch = OperatingSystemProvider.default.architecture;
 
     if (platform === Platform.Darwin)
-      return "/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll";
+      return "/Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll";
 
     throw new Error("Unsupported OS");
   }
