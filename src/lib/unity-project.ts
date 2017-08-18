@@ -1,4 +1,3 @@
-import Promise from "@spicypixel/core-kit-js/lib/promise";
 import * as path from "path";
 import * as fs from "@spicypixel/core-kit-js/lib/file-system";
 import ChildProcess from "@spicypixel/core-kit-js/lib/child-process";
