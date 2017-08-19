@@ -16,6 +16,10 @@ export default class UnityProject {
     return this._projectPath;
   }
 
+  get assetsPath(): string {
+    return path.join(this._projectPath, "Assets");
+  }
+
   private get projectPathArgs(): string[] {
     return [
       "-projectPath",
