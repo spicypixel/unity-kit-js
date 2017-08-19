@@ -16,9 +16,10 @@ test-output/
 # Ignore build instructions
 .babelrc
 .gitlab-ci.yml
+gulpfile.js
+gulpfile.ts
+package-lock.json
 tsconfig.json
 tslint.json
-typings.json
-gulpfile.babel.js
 *.lock
 *.log

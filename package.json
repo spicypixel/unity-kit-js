@@ -6,7 +6,6 @@
   "typings": "./lib/index.d.ts",
   "scripts": {
     "prepublishOnly": "gulp clean && gulp test",
-    "install": "gulp build",
     "clean": "gulp clean",
     "build": "gulp build",
     "rebuild": "gulp rebuild",
@@ -21,8 +20,8 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "@spicypixel/build-kit-js": "^0.0.46",
-    "@spicypixel/core-kit-js": "^0.0.40",
+    "@spicypixel/build-kit-js": "^0.0.49",
+    "@spicypixel/core-kit-js": "^0.0.43",
     "gulp": "^3.9.1",
     "gulp-util": "^3.0.8"
   }
