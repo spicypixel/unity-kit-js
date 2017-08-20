@@ -19,7 +19,21 @@ export default class UnityEditor {
 export default class UnityProject {
     constructor(projectPath: string);
     projectPath: string;
-    createAsync(): Promise<void>;
-    packageAsync(sourcePaths: string[], outputPath: string): Promise<void>;
+    assetsPath: string;
+    createAsync();
+    packageAsync(sourcePaths: string[], outputPath: string);
+}
+```
+
+## Unity Module Manager
+
+```javascript
+export default class UnityModuleManager {
+  constructor(unityProject: UnityProject, moduleVendor: string, moduleName: string);
+  get modulePath(): string;
+  async updateAsync(nodeScope: string, nodeModuleName: string,
+    assemblyNames: string[], editorAssemblyNames?: string[]);
+  async installAsync();
+  async packageAsync();
 }
 ```

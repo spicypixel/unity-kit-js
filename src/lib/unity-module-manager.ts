@@ -21,13 +21,27 @@ export default class UnityModuleManager {
     return path.join(this._unityProject.assetsPath, this._moduleVendor, "Modules", this._moduleName);
   }
 
-  async refreshDependenciesAsync(nodeScope: string, nodeModuleName: string,
+  /** Update module with latest dependencies */
+  async updateAsync(nodeScope: string, nodeModuleName: string,
     assemblyNames: string[], editorAssemblyNames?: string[]) {
     await this.cleanDependenciesAsync();
     await this.copyDependenciesToAssetsAsync(nodeScope, nodeModuleName,
       assemblyNames, editorAssemblyNames);
   }
 
+  /** Install */
+  async installAsync() {
+    const srcDir = this._unityProject.assetsPath;
+    const destDir = "Assets";
+
+    await CoreKit.FileSystem.copyPatternsAsync(
+      [path.join(srcDir, "**/*"), "!**/*.meta"],
+      destDir,
+      { base: srcDir }
+    );
+  }
+
+  /** Package */
   async packageAsync() {
     try {
       await CoreKit.FileSystem.Directory.accessAsync(this.modulePath,
@@ -40,8 +54,10 @@ export default class UnityModuleManager {
 
     await CoreKit.FileSystem.Directory.createRecursiveAsync("Artifacts");
     const tag = await BuildKit.GitRevision.tagAsync();
-    await this._unityProject.packageAsync([path.relative(this._unityProject.projectPath, this.modulePath)],
+    await this._unityProject.packageAsync(["Assets"],
       "./Artifacts/" + this._moduleVendor + "." + this._moduleName + "-" + tag + ".unitypackage");
+    // await this._unityProject.packageAsync([path.relative(this._unityProject.projectPath, this.modulePath)],
+    //   "./Artifacts/" + this._moduleVendor + "." + this._moduleName + "-" + tag + ".unitypackage");
   }
 
   private async cleanDependenciesAsync() {
