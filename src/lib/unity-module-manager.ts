@@ -26,9 +26,9 @@ export default class UnityModuleManager {
   }
 
   static createFromNodeModule(nodeScope: string, nodeModuleName: string, moduleVendor: string, moduleName: string): UnityModuleManager {
-    let dependencyManager = new BuildKit.DependencyManager();
-    let nodeDir = dependencyManager.getNodeModuleDir (nodeScope, nodeModuleName);
-    let project = new UnityProject(nodeDir);
+    const dependencyManager = new BuildKit.DependencyManager();
+    const nodeDir = dependencyManager.getNodeModuleDir (nodeScope, nodeModuleName);
+    const project = new UnityProject(nodeDir);
     return new UnityModuleManager(project, moduleVendor, moduleName);
   }
 
@@ -93,7 +93,7 @@ export default class UnityModuleManager {
 
   private async copyDependenciesToAssetsAsync(nodeScope: string, nodeModuleName: string,
     assemblyNames: string[], editorAssemblyNames?: string[]) {
-    let dependencyManager = new BuildKit.DependencyManager();
+    const dependencyManager = new BuildKit.DependencyManager();
     const nodeModuleDir = dependencyManager.getNodeModuleDir (nodeScope, nodeModuleName);
 
     const docsSrcDir = path.join(nodeModuleDir, "Docs");
