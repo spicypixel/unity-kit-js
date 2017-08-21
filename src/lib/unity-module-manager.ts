@@ -11,10 +11,25 @@ export default class UnityModuleManager {
   private _moduleVendor: string;
   private _moduleName: string;
 
-  constructor(unityProject: UnityProject, moduleVendor: string, moduleName: string) {
+  private constructor(unityProject: UnityProject, moduleVendor: string, moduleName: string) {
     this._unityProject = unityProject;
     this._moduleVendor = moduleVendor;
     this._moduleName = moduleName;
+  }
+
+  static createFromPath(path: string, moduleVendor: string, moduleName: string): UnityModuleManager {
+    return new UnityModuleManager(new UnityProject(path), moduleVendor, moduleName);
+  }
+
+  static createFromProject(unityProject: UnityProject, moduleVendor: string, moduleName: string): UnityModuleManager {
+    return new UnityModuleManager(unityProject, moduleVendor, moduleName);
+  }
+
+  static createFromNodeModule(nodeScope: string, nodeModuleName: string, moduleVendor: string, moduleName: string): UnityModuleManager {
+    let dependencyManager = new BuildKit.DependencyManager();
+    let nodeDir = dependencyManager.getNodeModuleDir (nodeScope, nodeModuleName);
+    let project = new UnityProject(nodeDir);
+    return new UnityModuleManager(project, moduleVendor, moduleName);
   }
 
   get modulePath(): string {
@@ -31,9 +46,12 @@ export default class UnityModuleManager {
 
   /** Install */
   async installAsync() {
-    const srcDir = this._unityProject.assetsPath;
-    const destDir = "Assets";
+    const srcDir = this.modulePath;
+    const destDir = path.relative(this._unityProject.projectPath, this.modulePath);
 
+    await CoreKit.FileSystem.removePatternsAsync(path.join(destDir, "**", "*"), {
+      globOptions: { ignore: "*.meta" }
+    });
     await CoreKit.FileSystem.copyPatternsAsync(
       [path.join(srcDir, "**/*"), "!**/*.meta"],
       destDir,
@@ -54,15 +72,14 @@ export default class UnityModuleManager {
 
     await CoreKit.FileSystem.Directory.createRecursiveAsync("Artifacts");
     const tag = await BuildKit.GitRevision.tagAsync();
-    await this._unityProject.packageAsync(["Assets"],
-      "./Artifacts/" + this._moduleVendor + "." + this._moduleName + "-" + tag + ".unitypackage");
-    // await this._unityProject.packageAsync([path.relative(this._unityProject.projectPath, this.modulePath)],
+    // await this._unityProject.packageAsync(["Assets"],
     //   "./Artifacts/" + this._moduleVendor + "." + this._moduleName + "-" + tag + ".unitypackage");
+    await this._unityProject.packageAsync([path.relative(this._unityProject.projectPath, this.modulePath)],
+      "./Artifacts/" + this._moduleVendor + "." + this._moduleName + "-" + tag + ".unitypackage");
   }
 
   private async cleanDependenciesAsync() {
-    gutil.log(gutil.colors.cyan("Cleaning ..."));
-
+    // gutil.log(gutil.colors.cyan("Cleaning ..."));
     await CoreKit.FileSystem.removePatternsAsync("Artifacts/*");
     await CoreKit.FileSystem.removePatternsAsync([
       "Bin/*.dll",
