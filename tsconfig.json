@@ -14,11 +14,14 @@
     "rootDir": "./src",
     "sourceRoot": "../src",
     "sourceMap": true,
-    "target": "esnext"
+    "target": "esnext",
+    "baseUrl": "node_modules/@spicypixel/build-kit-js/types",
+    "typeRoots": [
+      "node_modules/@spicypixel/build-kit-js/types"
+    ]
   },
   "exclude": [
     "gulpfile.ts",
-    "node_modules",
     "lib",
     "test"
   ]
