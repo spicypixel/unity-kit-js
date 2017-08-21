@@ -36,24 +36,27 @@ export default class UnityModuleManager {
     return path.join(this._unityProject.assetsPath, this._moduleVendor, "Modules", this._moduleName);
   }
 
-  /** Update module with latest dependencies */
-  async updateAsync(nodeScope: string, nodeModuleName: string,
+  /** Update module with latest library */
+  async importLibraryAsync(nodeScope: string, nodeModuleName: string,
     assemblyNames: string[], editorAssemblyNames?: string[]) {
-    await this.cleanDependenciesAsync();
-    await this.copyDependenciesToAssetsAsync(nodeScope, nodeModuleName,
+    await this.cleanLibraryAsync();
+    await this.copyLibraryToAssetsAsync(nodeScope, nodeModuleName,
       assemblyNames, editorAssemblyNames);
   }
 
-  /** Install */
-  async installAsync() {
-    const srcDir = this.modulePath;
-    const destDir = path.relative(this._unityProject.projectPath, this.modulePath);
+  /** Import module */
+  async importAsync() {
+    const srcDir = path.resolve(this.modulePath);
+    const destDir = path.resolve(path.relative(this._unityProject.projectPath, this.modulePath));
 
-    await CoreKit.FileSystem.removePatternsAsync(path.join(destDir, "**", "*"), {
-      globOptions: { ignore: "*.meta" }
-    });
+    if (destDir === srcDir) {
+      throw new Error("Source and destination cannot be the same: " + srcDir);
+    }
+
+    await CoreKit.FileSystem.removePatternsAsync(
+      [path.join(destDir, "**", "*"), "!" + path.join("**", "*.meta")]);
     await CoreKit.FileSystem.copyPatternsAsync(
-      [path.join(srcDir, "**/*"), "!**/*.meta"],
+      [path.join(srcDir, "**", "*"), "!" + path.join("**", "*.meta")],
       destDir,
       { base: srcDir }
     );
@@ -79,16 +82,11 @@ export default class UnityModuleManager {
       "./Artifacts/" + this._moduleVendor + "." + this._moduleName + "-" + tag + ".unitypackage");
   }
 
-  async cleanAsync() {
-    await this.cleanArtifactsAsync();
-    await this.cleanDependenciesAsync();
+  async cleanArtifactsAsync() {
+    await CoreKit.FileSystem.removePatternsAsync(path.join("Artifacts", "*"));
   }
 
-  private async cleanArtifactsAsync() {
-    await CoreKit.FileSystem.removePatternsAsync("Artifacts/*");
-  }
-
-  private async cleanDependenciesAsync() {
+  async cleanLibraryAsync() {
     // gutil.log(gutil.colors.cyan("Cleaning ..."));
     await CoreKit.FileSystem.removePatternsAsync([
       "Bin/*.dll",
@@ -100,7 +98,7 @@ export default class UnityModuleManager {
     ], { globOptions: { cwd: this.modulePath, ignore: "*.meta" } });
   }
 
-  private async copyDependenciesToAssetsAsync(nodeScope: string, nodeModuleName: string,
+  private async copyLibraryToAssetsAsync(nodeScope: string, nodeModuleName: string,
     assemblyNames: string[], editorAssemblyNames?: string[]) {
     const dependencyManager = new BuildKit.DependencyManager();
     const nodeModuleDir = dependencyManager.getNodeModuleDir (nodeScope, nodeModuleName);
