@@ -87,7 +87,6 @@ export default class UnityModuleManager {
   }
 
   async cleanLibraryAsync() {
-    // gutil.log(gutil.colors.cyan("Cleaning ..."));
     await CoreKit.FileSystem.removePatternsAsync([
       "Bin/*.dll",
       "Bin/Editor/*.dll",
@@ -95,7 +94,7 @@ export default class UnityModuleManager {
       "MonoDoc/*",
       "README.md",
       "LICENSE.md"
-    ], { globOptions: { cwd: this.modulePath, ignore: "*.meta" } });
+    ], { cwd: this.modulePath, ignore: "*.meta" });
   }
 
   private async copyLibraryToAssetsAsync(nodeScope: string, nodeModuleName: string,
