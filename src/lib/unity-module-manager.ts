@@ -71,6 +71,7 @@ export default class UnityModuleManager {
     }
 
     await CoreKit.FileSystem.Directory.createRecursiveAsync("Artifacts");
+    await this.cleanArtifactsAsync();
     const tag = await BuildKit.GitRevision.tagAsync();
     // await this._unityProject.packageAsync(["Assets"],
     //   "./Artifacts/" + this._moduleVendor + "." + this._moduleName + "-" + tag + ".unitypackage");
@@ -78,9 +79,17 @@ export default class UnityModuleManager {
       "./Artifacts/" + this._moduleVendor + "." + this._moduleName + "-" + tag + ".unitypackage");
   }
 
+  async cleanAsync() {
+    await this.cleanArtifactsAsync();
+    await this.cleanDependenciesAsync();
+  }
+
+  private async cleanArtifactsAsync() {
+    await CoreKit.FileSystem.removePatternsAsync("Artifacts/*");
+  }
+
   private async cleanDependenciesAsync() {
     // gutil.log(gutil.colors.cyan("Cleaning ..."));
-    await CoreKit.FileSystem.removePatternsAsync("Artifacts/*");
     await CoreKit.FileSystem.removePatternsAsync([
       "Bin/*.dll",
       "Bin/Editor/*.dll",
