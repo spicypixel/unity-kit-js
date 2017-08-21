@@ -93,8 +93,9 @@ export default class UnityModuleManager {
       "Docs/*",
       "MonoDoc/*",
       "README.md",
-      "LICENSE.md"
-    ], { cwd: this.modulePath, ignore: "*.meta" });
+      "LICENSE.md",
+      "!**/*.meta"
+    ], { cwd: this.modulePath });
   }
 
   private async copyLibraryToAssetsAsync(nodeScope: string, nodeModuleName: string,
