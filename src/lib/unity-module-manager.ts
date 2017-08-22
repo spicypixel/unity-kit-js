@@ -32,6 +32,16 @@ export default class UnityModuleManager {
     return new UnityModuleManager(project, moduleVendor, moduleName);
   }
 
+  static async cleanImportAsync(moduleNames: string[]) {
+    moduleNames.forEach(async moduleName => {
+      await CoreKit.FileSystem.removePatternsAsync([
+        "Assets/SpicyPixel/Modules/" + moduleName + "/**/*",
+        "!Assets/SpicyPixel/Modules/*/Bin",
+        "!Assets/SpicyPixel/Modules/*/Bin/Editor",
+        "!**/*.meta"]);
+    });
+  }
+
   get modulePath(): string {
     return path.join(this._unityProject.assetsPath, this._moduleVendor, "Modules", this._moduleName);
   }
