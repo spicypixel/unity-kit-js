@@ -54,7 +54,10 @@ export default class UnityModuleManager {
     }
 
     await CoreKit.FileSystem.removePatternsAsync(
-      [path.join(destDir, "**", "*"), "!" + path.join("**", "*.meta")]);
+      [path.join(destDir, "**", "*"),
+      "!" + path.join(destDir, "*", "Bin"),
+      "!" + path.join(destDir, "*", "Bin", "Editor"),
+      "!" + path.join("**", "*.meta")]);
     await CoreKit.FileSystem.copyPatternsAsync(
       [path.join(srcDir, "**", "*"), "!" + path.join("**", "*.meta")],
       destDir,
