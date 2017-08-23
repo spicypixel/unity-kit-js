@@ -145,7 +145,7 @@ export default class UnityModuleManager {
         CoreKit.FileSystem.copyPatternsAsync(
           [path.join(srcDir, "**", "*.cs"), "!**/AssemblyInfo.cs"],
           sourceDestDir,
-          { base: srcDir }
+          { base: sourceSrcDir }
         ));
     });
 
