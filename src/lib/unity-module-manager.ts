@@ -35,10 +35,7 @@ export default class UnityModuleManager {
   static async cleanImportAsync(moduleNames: string[]) {
     moduleNames.forEach(async moduleName => {
       await CoreKit.FileSystem.removePatternsAsync([
-        "Assets/SpicyPixel/Modules/" + moduleName + "/**/*",
-        "!Assets/SpicyPixel/Modules/*/Bin",
-        "!Assets/SpicyPixel/Modules/*/Bin/Editor",
-        "!**/*.meta"]);
+        "Assets/SpicyPixel/Modules/" + moduleName + "/"]);
     });
   }
 
@@ -48,10 +45,10 @@ export default class UnityModuleManager {
 
   /** Update module with latest library */
   async importLibraryAsync(nodeScope: string, nodeModuleName: string,
-    assemblyNames: string[], editorAssemblyNames?: string[]) {
+    assemblyNames: string[], editorAssemblyNames: string[], sourceNames: string[]) {
     await this.cleanLibraryAsync();
     await this.copyLibraryToAssetsAsync(nodeScope, nodeModuleName,
-      assemblyNames, editorAssemblyNames);
+      assemblyNames, editorAssemblyNames, sourceNames);
   }
 
   /** Import module */
@@ -64,10 +61,7 @@ export default class UnityModuleManager {
     }
 
     await CoreKit.FileSystem.removePatternsAsync(
-      [path.join(destDir, "**", "*"),
-      "!" + path.join(destDir, "Bin"),
-      "!" + path.join(destDir, "Bin", "Editor"),
-      "!" + path.join("**", "*.meta")]);
+      [path.join(destDir, "**", "*")]);
     await CoreKit.FileSystem.copyPatternsAsync(
       [path.join(srcDir, "**", "*"), "!" + path.join("**", "*.meta")],
       destDir,
@@ -101,18 +95,17 @@ export default class UnityModuleManager {
 
   async cleanLibraryAsync() {
     await CoreKit.FileSystem.removePatternsAsync([
-      "Bin/*.dll",
-      "Bin/Editor/*.dll",
-      "Docs/*",
-      "MonoDoc/*",
+      "Bin/",
+      "Docs/",
+      "MonoDoc/",
+      "Source/",
       "README.md",
-      "LICENSE.md",
-      "!**/*.meta"
+      "LICENSE.md"
     ], { cwd: this.modulePath });
   }
 
   private async copyLibraryToAssetsAsync(nodeScope: string, nodeModuleName: string,
-    assemblyNames: string[], editorAssemblyNames?: string[]) {
+    assemblyNames: string[], editorAssemblyNames: string[], sourceNames: string[]) {
     const dependencyManager = new BuildKit.DependencyManager();
     const nodeModuleDir = dependencyManager.getNodeModuleDir (nodeScope, nodeModuleName);
 
@@ -122,6 +115,7 @@ export default class UnityModuleManager {
     const monoDocDestDir = path.join(this.modulePath, "MonoDoc");
     const binDestDir = path.join(this.modulePath, "Bin");
     const editorDestDir = path.join(binDestDir, "Editor");
+    const sourceDestDir = path.join(this.modulePath, "Source");
 
     let promises: Promise<void>[] = [];
 
@@ -141,6 +135,16 @@ export default class UnityModuleManager {
         CoreKit.FileSystem.copyPatternsAsync(
           path.join(srcDir, assembly + ".dll"),
           editorDestDir,
+          { base: srcDir }
+        ));
+    });
+
+    sourceNames.forEach(assembly => {
+      const srcDir = path.join(sourceSrcDir, assembly);
+      promises = promises.concat(
+        CoreKit.FileSystem.copyPatternsAsync(
+          [path.join(srcDir, "**", "*.cs"), "!**/AssemblyInfo.cs"],
+          sourceDestDir,
           { base: srcDir }
         ));
     });
