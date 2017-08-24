@@ -11,7 +11,7 @@ export default class UnityModuleLibraryReference {
   private _module: UnityModule;
   private _nodeModule: BuildKit.NodeModule;
 
-  private constructor(module: UnityModule, nodeModule: BuildKit.NodeModule) {
+  constructor(module: UnityModule, nodeModule: BuildKit.NodeModule) {
     this._module = module;
     this._nodeModule = nodeModule;
   }
