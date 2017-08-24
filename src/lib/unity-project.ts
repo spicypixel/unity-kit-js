@@ -54,7 +54,8 @@ export default class UnityProject {
   async importPackageAsync(packagePath: string): Promise<void> {
     await this.verifyProjectExistsAsync();
 
-    packagePath = path.resolve(path.join(this._projectPath, packagePath));
+    if (!path.isAbsolute(packagePath))
+      packagePath = path.resolve(path.join(this._projectPath, packagePath));
 
     try {
       await fs.FileSystemRecord.accessAsync(packagePath, fs.FileSystemPermission.Visible);
