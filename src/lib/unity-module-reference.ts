@@ -13,6 +13,7 @@ export default class UnityModuleReference {
   private _moduleName: string;
 
   private constructor(project: UnityProject, moduleProject: UnityProject, moduleVendor: string, moduleName: string) {
+    this._project = project;
     this._moduleProject = moduleProject;
     this._moduleVendor = moduleVendor;
     this._moduleName = moduleName;
