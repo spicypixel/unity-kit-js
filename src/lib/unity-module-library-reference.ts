@@ -56,14 +56,39 @@ export default class UnityModuleLibraryReference {
     ], { cwd: this.installPath, nodir: true });
 
     // Remove folders that no longer exist
-    await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
-      path.join(this.referencePath, "Docs"),
-      path.join(this.installPath, "Docs")
-    );
-    await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
-      path.join(this.referencePath, "Source"),
-      path.join(this.installPath, "Source")
-    );
+    let found: boolean;
+    try {
+      await CoreKit.FileSystem.Directory.accessAsync(path.join(this.referencePath, "Docs"),
+        CoreKit.FileSystem.FileSystemPermission.Visible);
+      await CoreKit.FileSystem.Directory.accessAsync(path.join(this.installPath, "Docs"),
+        CoreKit.FileSystem.FileSystemPermission.Visible);
+      found = true;
+    }
+    catch (error) {
+      found = false;
+    }
+    if (found) {
+      await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
+        path.join(this.referencePath, "Docs"),
+        path.join(this.installPath, "Docs")
+      );
+    }
+    try {
+      await CoreKit.FileSystem.Directory.accessAsync(path.join(this.referencePath, "Source"),
+        CoreKit.FileSystem.FileSystemPermission.Visible);
+      await CoreKit.FileSystem.Directory.accessAsync(path.join(this.installPath, "Source"),
+        CoreKit.FileSystem.FileSystemPermission.Visible);
+      found = true;
+    }
+    catch (error) {
+      found = false;
+    }
+    if (found) {
+      await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
+        path.join(this.referencePath, "Source"),
+        path.join(this.installPath, "Source")
+      );
+    }
   }
 
   private async copyLibraryToAssetsAsync(
