@@ -5,33 +5,19 @@ import * as path from "path";
 import * as BuildKit from "@spicypixel/build-kit-js";
 import * as CoreKit from "@spicypixel/core-kit-js";
 import UnityProject from "./unity-project";
+import UnityModule from "./unity-module";
 
 export default class UnityModuleLibraryReference {
-  private _project: UnityProject;
-  private _moduleProject: UnityProject;
-  private _moduleVendor: string;
-  private _moduleName: string;
+  private _module: UnityModule;
+  private _nodeModule: BuildKit.NodeModule;
 
-  private constructor(project: UnityProject, moduleProject: UnityProject, moduleVendor: string, moduleName: string) {
-    this._project = project;
-    this._moduleProject = moduleProject;
-    this._moduleVendor = moduleVendor;
-    this._moduleName = moduleName;
-  }
-
-  static createFromNodeModule(project: UnityProject, nodeScope: string, nodeModuleName: string, moduleVendor: string, moduleName: string): UnityModuleLibraryReference {
-    const dependencyManager = new BuildKit.DependencyManager();
-    const nodeDir = dependencyManager.getNodeModuleDir (nodeScope, nodeModuleName);
-    const moduleProject = new UnityProject(nodeDir);
-    return new UnityModuleLibraryReference(project, moduleProject, moduleVendor, moduleName);
-  }
-
-  get referencePath(): string {
-    return path.resolve(path.join(this._moduleProject.assetsPath, this._moduleVendor, "Modules", this._moduleName));
+  private constructor(module: UnityModule, nodeModule: BuildKit.NodeModule) {
+    this._module = module;
+    this._nodeModule = nodeModule;
   }
 
   get installPath(): string {
-    return path.resolve(path.join(this._project.assetsPath, this._moduleVendor, "Modules", this._moduleName));
+    return path.resolve(path.join(this._module.project.assetsPath, this._module.vendor, "Modules", this._module.name));
   }
 
   /** Update module with latest library */
@@ -58,7 +44,7 @@ export default class UnityModuleLibraryReference {
     // Remove folders that no longer exist
     let found: boolean;
     try {
-      await CoreKit.FileSystem.Directory.accessAsync(path.join(this.referencePath, "Docs"),
+      await CoreKit.FileSystem.Directory.accessAsync(path.join(this._nodeModule.packageDir, "Docs"),
         CoreKit.FileSystem.FileSystemPermission.Visible);
       await CoreKit.FileSystem.Directory.accessAsync(path.join(this.installPath, "Docs"),
         CoreKit.FileSystem.FileSystemPermission.Visible);
@@ -69,12 +55,12 @@ export default class UnityModuleLibraryReference {
     }
     if (found) {
       await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
-        path.join(this.referencePath, "Docs"),
+        path.join(this._nodeModule.packageDir, "Docs"),
         path.join(this.installPath, "Docs")
       );
     }
     try {
-      await CoreKit.FileSystem.Directory.accessAsync(path.join(this.referencePath, "Source"),
+      await CoreKit.FileSystem.Directory.accessAsync(path.join(this._nodeModule.packageDir, "Source"),
         CoreKit.FileSystem.FileSystemPermission.Visible);
       await CoreKit.FileSystem.Directory.accessAsync(path.join(this.installPath, "Source"),
         CoreKit.FileSystem.FileSystemPermission.Visible);
@@ -85,7 +71,7 @@ export default class UnityModuleLibraryReference {
     }
     if (found) {
       await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
-        path.join(this.referencePath, "Source"),
+        path.join(this._nodeModule.packageDir, "Source"),
         path.join(this.installPath, "Source")
       );
     }
@@ -93,11 +79,9 @@ export default class UnityModuleLibraryReference {
 
   private async copyLibraryToAssetsAsync(
     assemblyNames: string[], editorAssemblyNames: string[], sourceNames: string[]) {
-    const dependencyManager = new BuildKit.DependencyManager();
-    const nodeModuleDir = this._moduleProject.projectPath;
 
-    const docsSrcDir = path.join(nodeModuleDir, "Docs");
-    const sourceSrcDir = path.join(nodeModuleDir, "Source");
+    const docsSrcDir = path.join(this._nodeModule.packageDir, "Docs");
+    const sourceSrcDir = path.join(this._nodeModule.packageDir, "Source");
     const docsDestDir = path.join(this.installPath, "Docs");
     const monoDocDestDir = path.join(this.installPath, "MonoDoc");
     const binDestDir = path.join(this.installPath, "Bin");
@@ -151,14 +135,14 @@ export default class UnityModuleLibraryReference {
           "assemble/*.zip",
         ],
         monoDocDestDir,
-        { cwd: path.join(nodeModuleDir, "MonoDoc"), flatten: true }
+        { cwd: path.join(this._nodeModule.packageDir, "MonoDoc"), flatten: true }
       ));
 
     promises = promises.concat(
       CoreKit.FileSystem.copyPatternsAsync(
         ["README.md", "LICENSE.md"],
         this.installPath,
-        { cwd: nodeModuleDir }
+        { cwd: this._nodeModule.packageDir }
       ));
 
     await Promise.all(promises);

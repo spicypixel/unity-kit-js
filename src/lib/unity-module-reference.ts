@@ -4,38 +4,34 @@ import * as path from "path";
 
 import * as BuildKit from "@spicypixel/build-kit-js";
 import * as CoreKit from "@spicypixel/core-kit-js";
+import UnityModule from "./unity-module";
 import UnityProject from "./unity-project";
 
 export default class UnityModuleReference {
-  private _project: UnityProject;
-  private _moduleProject: UnityProject;
-  private _moduleVendor: string;
-  private _moduleName: string;
+  private _module: UnityModule;
+  private _nodeModule: BuildKit.NodeModule;
+  private _nodeModuleVendor: string;
+  private _nodeModuleName: string;
+  private _nodeModuleProject: UnityProject;
 
-  private constructor(project: UnityProject, moduleProject: UnityProject, moduleVendor: string, moduleName: string) {
-    this._project = project;
-    this._moduleProject = moduleProject;
-    this._moduleVendor = moduleVendor;
-    this._moduleName = moduleName;
-  }
-
-  static createFromNodeModule(project: UnityProject, nodeScope: string, nodeModuleName: string, moduleVendor: string, moduleName: string): UnityModuleReference {
-    const dependencyManager = new BuildKit.DependencyManager();
-    const nodeDir = dependencyManager.getNodeModuleDir (nodeScope, nodeModuleName);
-    const moduleProject = new UnityProject(nodeDir);
-    return new UnityModuleReference(project, moduleProject, moduleVendor, moduleName);
+  constructor(module: UnityModule, nodeModule: BuildKit.NodeModule, nodeModuleVendor: string, nodeModuleName: string) {
+    this._module = module;
+    this._nodeModule = nodeModule;
+    this._nodeModuleVendor = nodeModuleVendor;
+    this._nodeModuleName = nodeModuleName;
+    this._nodeModuleProject = new UnityProject(nodeModule.packageDir);
   }
 
   get referencePath(): string {
-    return path.resolve(path.join(this._moduleProject.assetsPath, this._moduleVendor, "Modules", this._moduleName));
+    return path.resolve(path.join(this._nodeModuleProject.assetsPath, this._nodeModuleVendor, "Modules", this._nodeModuleName));
   }
 
   get installPath(): string {
-    return path.resolve(path.join(this._project.assetsPath, this._moduleVendor, "Modules", this._moduleName));
+    return path.resolve(path.join(this._module.project.assetsPath, this._nodeModuleVendor, "Modules", this._nodeModuleName));
   }
 
   get artifactsPath(): string {
-    return path.join(this._moduleProject.projectPath, "Artifacts");
+    return path.join(this._nodeModuleProject.projectPath, "Artifacts");
   }
 
   async installAsync() {
@@ -44,7 +40,7 @@ export default class UnityModuleReference {
     }
 
     const packageFileName = await this.getPackageFileName();
-    await this._project.importPackageAsync(path.join(this.artifactsPath, packageFileName));
+    await this._module.project.importPackageAsync(path.join(this.artifactsPath, packageFileName));
   }
 
   async uninstallAsync() {
@@ -52,8 +48,8 @@ export default class UnityModuleReference {
   }
 
   async getPackageFileName(): Promise<string> {
-    const pkg = await CoreKit.FileSystem.File.readFileAsync(path.join(this._moduleProject.projectPath, "package.json"), "utf8");
+    const pkg = await CoreKit.FileSystem.File.readFileAsync(path.join(this._nodeModuleProject.projectPath, "package.json"), "utf8");
     const tag = "v" + JSON.parse(<any>pkg).version;
-    return this._moduleVendor + "." + this._moduleName + "-" + tag + ".unitypackage";
+    return this._nodeModuleVendor + "." + this._nodeModuleName + "-" + tag + ".unitypackage";
   }
 }
