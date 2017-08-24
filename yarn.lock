@@ -19,9 +19,9 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
-"@spicypixel/build-kit-js@^0.0.53":
-  version "0.0.53"
-  resolved "http://npm.darkavalon.homeip.net/@spicypixel%2fbuild-kit-js/-/build-kit-js-0.0.53.tgz#35327785762cec5679160af3cc45bfde081e85b7"
+"@spicypixel/build-kit-js@^0.0.58":
+  version "0.0.58"
+  resolved "https://registry.npmjs.org/@spicypixel/build-kit-js/-/build-kit-js-0.0.58.tgz#6ba620befb3cf01b5679553ab6684c5922f611e9"
   dependencies:
     "@types/bluebird" "^3.5.8"
     "@types/chai" "^4.0.3"
@@ -60,15 +60,15 @@
     typings "^2.1.1"
     yargs "^8.0.2"
 
-"@spicypixel/core-kit-js@^0.0.46":
-  version "0.0.46"
-  resolved "http://npm.darkavalon.homeip.net/@spicypixel%2fcore-kit-js/-/core-kit-js-0.0.46.tgz#f52a0268531c6e319cebda21e225581bf8448ba6"
+"@spicypixel/core-kit-js@^0.0.49":
+  version "0.0.49"
+  resolved "https://registry.npmjs.org/@spicypixel/core-kit-js/-/core-kit-js-0.0.49.tgz#f88737e6916c02e83f004edcb83c49d63ed5351b"
   dependencies:
-    "@spicypixel/build-kit-js" "^0.0.53"
-    "@types/glob" "^5.0.31"
-    "@types/gulp-if" "^0.0.31"
-    "@types/ncp" "^2.0.0"
-    "@types/vinyl" "^2.0.0"
+    "@spicypixel/build-kit-js" "^0.0.58"
+    "@types/glob" "^5.0.32"
+    "@types/gulp-if" "^0.0.32"
+    "@types/ncp" "^2.0.1"
+    "@types/vinyl" "^2.0.1"
     babel-core "^6.26.0"
     babel-preset-env "^1.6.0"
     chai "^4.1.1"
@@ -79,6 +79,7 @@
     gulp-util "^3.0.8"
     mocha "^3.5.0"
     typescript "^2.4.2"
+    walk "^2.3.9"
 
 "@types/bluebird@^3.5.8":
   version "3.5.8"
@@ -123,9 +124,16 @@
     "@types/glob" "*"
     "@types/node" "*"
 
-"@types/glob@*", "@types/glob@^5.0.31":
+"@types/glob@*":
   version "5.0.31"
   resolved "http://npm.darkavalon.homeip.net/@types%2fglob/-/glob-5.0.31.tgz#6cb8500bd170750c1948f785cc5828e9cff0c36a"
+  dependencies:
+    "@types/minimatch" "*"
+    "@types/node" "*"
+
+"@types/glob@^5.0.32":
+  version "5.0.32"
+  resolved "https://registry.npmjs.org/@types/glob/-/glob-5.0.32.tgz#aec5cfe987c72f099fdb1184452986aa506d5e8f"
   dependencies:
     "@types/minimatch" "*"
     "@types/node" "*"
@@ -136,9 +144,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/gulp-if@^0.0.31":
-  version "0.0.31"
-  resolved "http://npm.darkavalon.homeip.net/@types%2fgulp-if/-/gulp-if-0.0.31.tgz#fff41febb0415c3264b6bf03ede1635cb31b5b82"
+"@types/gulp-if@^0.0.32":
+  version "0.0.32"
+  resolved "https://registry.npmjs.org/@types/gulp-if/-/gulp-if-0.0.32.tgz#6a604be7a15a59bb3b2d3993520e1ef2bd41f9d6"
   dependencies:
     "@types/node" "*"
     "@types/vinyl" "*"
@@ -152,7 +160,7 @@
 
 "@types/gulp-util@^3.0.31":
   version "3.0.31"
-  resolved "http://npm.darkavalon.homeip.net/@types%2fgulp-util/-/gulp-util-3.0.31.tgz#272e298220365717e1f7f979b50ebadb44297cbf"
+  resolved "https://registry.npmjs.org/@types/gulp-util/-/gulp-util-3.0.31.tgz#272e298220365717e1f7f979b50ebadb44297cbf"
   dependencies:
     "@types/chalk" "*"
     "@types/node" "*"
@@ -175,9 +183,9 @@
   version "2.2.41"
   resolved "http://npm.darkavalon.homeip.net/@types%2fmocha/-/mocha-2.2.41.tgz#e27cf0817153eb9f2713b2d3f6c68f1e1c3ca608"
 
-"@types/ncp@^2.0.0":
-  version "2.0.0"
-  resolved "http://npm.darkavalon.homeip.net/@types%2fncp/-/ncp-2.0.0.tgz#25bd2397ce87dc98ab6207610f47d05209025e7f"
+"@types/ncp@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/@types/ncp/-/ncp-2.0.1.tgz#749432511f6ad747d04e98837b18cca9045567fb"
   dependencies:
     "@types/node" "*"
 
@@ -209,9 +217,15 @@
     "@types/node" "*"
     "@types/vinyl" "*"
 
-"@types/vinyl@*", "@types/vinyl@^2.0.0":
+"@types/vinyl@*":
   version "2.0.0"
   resolved "http://npm.darkavalon.homeip.net/@types%2fvinyl/-/vinyl-2.0.0.tgz#fd213bf7f4136dde21fe1895500b12c186f8c268"
+  dependencies:
+    "@types/node" "*"
+
+"@types/vinyl@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/@types/vinyl/-/vinyl-2.0.1.tgz#6b414dfdcd4a785e8e76e87565ed29e79490d9b7"
   dependencies:
     "@types/node" "*"
 
@@ -1389,6 +1403,10 @@ for-own@^1.0.0:
   dependencies:
     for-in "^1.0.1"
 
+foreachasync@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/foreachasync/-/foreachasync-3.0.0.tgz#5502987dc8714be3392097f32e0071c9dee07cf6"
+
 fork-stream@^0.0.4:
   version "0.0.4"
   resolved "http://npm.darkavalon.homeip.net/fork-stream/-/fork-stream-0.0.4.tgz#db849fce77f6708a5f8f386ae533a0907b54ae70"
@@ -1740,7 +1758,7 @@ gulp-typescript@^3.2.1:
     through2 "~2.0.1"
     vinyl-fs "~2.4.3"
 
-gulp-util@>=3.0.0, gulp-util@^3.0.0, gulp-util@^3.0.7, gulp-util@~3.0.7, gulp-util@~3.0.8:
+gulp-util@>=3.0.0, gulp-util@^3.0.0, gulp-util@^3.0.7, gulp-util@^3.0.8, gulp-util@~3.0.7, gulp-util@~3.0.8:
   version "3.0.8"
   resolved "https://registry.npmjs.org/gulp-util/-/gulp-util-3.0.8.tgz#0054e1e744502e27c04c187c3ecc505dd54bbb4f"
   dependencies:
@@ -1763,32 +1781,9 @@ gulp-util@>=3.0.0, gulp-util@^3.0.0, gulp-util@^3.0.7, gulp-util@~3.0.7, gulp-ut
     through2 "^2.0.0"
     vinyl "^0.5.0"
 
-gulp-util@^3.0.8:
-  version "3.0.8"
-  resolved "http://npm.darkavalon.homeip.net/gulp-util/-/gulp-util-3.0.8.tgz#0054e1e744502e27c04c187c3ecc505dd54bbb4f"
-  dependencies:
-    array-differ "^1.0.0"
-    array-uniq "^1.0.2"
-    beeper "^1.0.0"
-    chalk "^1.0.0"
-    dateformat "^2.0.0"
-    fancy-log "^1.1.0"
-    gulplog "^1.0.0"
-    has-gulplog "^0.1.0"
-    lodash._reescape "^3.0.0"
-    lodash._reevaluate "^3.0.0"
-    lodash._reinterpolate "^3.0.0"
-    lodash.template "^3.0.0"
-    minimist "^1.1.0"
-    multipipe "^0.1.2"
-    object-assign "^3.0.0"
-    replace-ext "0.0.1"
-    through2 "^2.0.0"
-    vinyl "^0.5.0"
-
 gulp@^3.9.1:
   version "3.9.1"
-  resolved "http://npm.darkavalon.homeip.net/gulp/-/gulp-3.9.1.tgz#571ce45928dd40af6514fc4011866016c13845b4"
+  resolved "https://registry.npmjs.org/gulp/-/gulp-3.9.1.tgz#571ce45928dd40af6514fc4011866016c13845b4"
   dependencies:
     archy "^1.0.0"
     chalk "^1.0.0"
@@ -3599,6 +3594,12 @@ vinyl@^0.5.0:
     clone "^1.0.0"
     clone-stats "^0.0.1"
     replace-ext "0.0.1"
+
+walk@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.npmjs.org/walk/-/walk-2.3.9.tgz#31b4db6678f2ae01c39ea9fb8725a9031e558a7b"
+  dependencies:
+    foreachasync "^3.0.0"
 
 wcwidth@^1.0.0:
   version "1.0.1"

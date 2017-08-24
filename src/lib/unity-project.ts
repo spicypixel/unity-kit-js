@@ -37,7 +37,7 @@ export default class UnityProject {
     await ChildProcess.spawnAsync(UnityEditor.editorPath, args, { stdio: ["pipe", "ignore", process.stderr] });
   }
 
-  async packageAsync(sourcePaths: string[], outputPath: string): Promise<void> {
+  async exportPackageAsync(sourcePaths: string[], outputPath: string): Promise<void> {
     await this.verifyProjectExistsAsync();
 
     await fs.Directory.createRecursiveAsync(path.dirname(outputPath));
@@ -47,6 +47,25 @@ export default class UnityProject {
     args = args.concat("-exportPackage");
     args = args.concat(sourcePaths);
     args = args.concat(outputPath);
+
+    await ChildProcess.spawnAsync(UnityEditor.editorPath, args, { stdio: ["pipe", "ignore", process.stderr] });
+  }
+
+  async importPackageAsync(packagePath: string): Promise<void> {
+    await this.verifyProjectExistsAsync();
+
+    packagePath = path.resolve(path.join(this._projectPath, packagePath));
+
+    try {
+      await fs.FileSystemRecord.accessAsync(packagePath, fs.FileSystemPermission.Visible);
+    } catch (err) {
+      throw new Error("Package path does not exist: " + err.message);
+    }
+
+    let args = UnityEditor.batchModeArgs;
+    args = args.concat(this.projectPathArgs);
+    args = args.concat("-importPackage");
+    args = args.concat(packagePath);
 
     await ChildProcess.spawnAsync(UnityEditor.editorPath, args, { stdio: ["pipe", "ignore", process.stderr] });
   }
