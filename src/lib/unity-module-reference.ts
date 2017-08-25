@@ -45,7 +45,7 @@ export default class UnityModuleReference {
   }
 
   async uninstallAsync() {
-    await CoreKit.FileSystem.removePatternsAsync(this.installPath);
+    await CoreKit.FileSystem.removePatternsAsync(path.join(this.installPath, "*"));
 
     // Remove files except *.meta
     // await CoreKit.FileSystem.removePatternsAsync([
