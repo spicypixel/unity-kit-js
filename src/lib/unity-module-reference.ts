@@ -45,20 +45,20 @@ export default class UnityModuleReference {
   }
 
   async uninstallAsync() {
-    // await CoreKit.FileSystem.removePatternsAsync(this.installPath);
+    await CoreKit.FileSystem.removePatternsAsync(this.installPath);
 
     // Remove files except *.meta
-    await CoreKit.FileSystem.removePatternsAsync([
-      "**/*",
-      "!**/*.meta"
-    ], { cwd: this.installPath, nodir: true });
+    // await CoreKit.FileSystem.removePatternsAsync([
+    //   "**/*",
+    //   "!**/*.meta"
+    // ], { cwd: this.installPath, nodir: true });
 
     // Remove folders that no longer exist
-    await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
-      this.referencePath,
-      this.installPath,
-      { ignoreMissingSource: true, ignoreMissingDestination: true }
-    );
+    // await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
+    //   this.referencePath,
+    //   this.installPath,
+    //   { ignoreMissingSource: true, ignoreMissingDestination: true }
+    // );
   }
 
   async getPackageFileName(): Promise<string> {
