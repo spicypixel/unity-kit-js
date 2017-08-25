@@ -60,9 +60,9 @@
     typings "^2.1.1"
     yargs "^8.0.2"
 
-"@spicypixel/core-kit-js@^0.0.50":
-  version "0.0.50"
-  resolved "https://registry.npmjs.org/@spicypixel/core-kit-js/-/core-kit-js-0.0.50.tgz#f8ef093383b58fbb76945f0deb6786e40eb59265"
+"@spicypixel/core-kit-js@^0.0.52":
+  version "0.0.52"
+  resolved "https://registry.npmjs.org/@spicypixel/core-kit-js/-/core-kit-js-0.0.52.tgz#df075294a2e30f88cf23c976777ba1dadea38c00"
   dependencies:
     "@spicypixel/build-kit-js" "^0.0.60"
     "@types/glob" "^5.0.32"

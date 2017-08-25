@@ -17,7 +17,7 @@ export default class UnityModuleLibraryReference {
   }
 
   get installPath(): string {
-    return path.resolve(path.join(this._module.project.assetsPath, this._module.vendor, "Modules", this._module.name));
+    return this._module.modulePath;
   }
 
   /** Update module with latest library */
@@ -31,50 +31,27 @@ export default class UnityModuleLibraryReference {
   async uninstallAsync() {
     // Remove files except *.meta
     await CoreKit.FileSystem.removePatternsAsync([
-      "Bin/*",
-      "Bin/Editor/*",
-      "Docs/*",
-      "MonoDoc/*",
-      "Source/**/*",
+      "Bin/**/*",
+      "Docs/**/*",
+      "MonoDoc/**/*",
+      "Scripts/**/*",
       "README.md",
       "LICENSE.md",
       "!**/*.meta"
     ], { cwd: this.installPath, nodir: true });
 
     // Remove folders that no longer exist
-    let found: boolean;
-    try {
-      await CoreKit.FileSystem.Directory.accessAsync(path.join(this._nodeModule.packageDir, "Docs"),
-        CoreKit.FileSystem.FileSystemPermission.Visible);
-      await CoreKit.FileSystem.Directory.accessAsync(path.join(this.installPath, "Docs"),
-        CoreKit.FileSystem.FileSystemPermission.Visible);
-      found = true;
-    }
-    catch (error) {
-      found = false;
-    }
-    if (found) {
-      await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
-        path.join(this._nodeModule.packageDir, "Docs"),
-        path.join(this.installPath, "Docs")
-      );
-    }
-    try {
-      await CoreKit.FileSystem.Directory.accessAsync(path.join(this._nodeModule.packageDir, "Source"),
-        CoreKit.FileSystem.FileSystemPermission.Visible);
-      await CoreKit.FileSystem.Directory.accessAsync(path.join(this.installPath, "Source"),
-        CoreKit.FileSystem.FileSystemPermission.Visible);
-      found = true;
-    }
-    catch (error) {
-      found = false;
-    }
-    if (found) {
-      await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
-        path.join(this._nodeModule.packageDir, "Source"),
-        path.join(this.installPath, "Source")
-      );
-    }
+    await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
+      path.join(this._nodeModule.packageDir, "Docs"),
+      path.join(this.installPath, "Docs"),
+      { ignoreMissingSource: true, ignoreMissingDestination: true }
+    );
+
+    await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
+      path.join(this._nodeModule.packageDir, "Source"),
+      path.join(this.installPath, "Scripts"),
+      { ignoreMissingSource: true, ignoreMissingDestination: true }
+    );
   }
 
   private async copyLibraryToAssetsAsync(
@@ -86,7 +63,7 @@ export default class UnityModuleLibraryReference {
     const monoDocDestDir = path.join(this.installPath, "MonoDoc");
     const binDestDir = path.join(this.installPath, "Bin");
     const editorDestDir = path.join(binDestDir, "Editor");
-    const sourceDestDir = path.join(this.installPath, "Source");
+    const sourceDestDir = path.join(this.installPath, "Scripts");
 
     let promises: Promise<void>[] = [];
 

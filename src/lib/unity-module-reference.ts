@@ -39,12 +39,26 @@ export default class UnityModuleReference {
       throw new Error("Source and destination cannot be the same: " + this.referencePath);
     }
 
+    await this.uninstallAsync();
     const packageFileName = await this.getPackageFileName();
     await this._module.project.importPackageAsync(path.join(this.artifactsPath, packageFileName));
   }
 
   async uninstallAsync() {
-    await CoreKit.FileSystem.removePatternsAsync(this.installPath);
+    // await CoreKit.FileSystem.removePatternsAsync(this.installPath);
+
+    // Remove files except *.meta
+    await CoreKit.FileSystem.removePatternsAsync([
+      "**/*",
+      "!**/*.meta"
+    ], { cwd: this.installPath, nodir: true });
+
+    // Remove folders that no longer exist
+    await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
+      this.referencePath,
+      this.installPath,
+      { ignoreMissingSource: true, ignoreMissingDestination: true }
+    );
   }
 
   async getPackageFileName(): Promise<string> {

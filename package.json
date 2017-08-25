@@ -21,7 +21,7 @@
   "devDependencies": {},
   "dependencies": {
     "@spicypixel/build-kit-js": "^0.0.60",
-    "@spicypixel/core-kit-js": "^0.0.50",
+    "@spicypixel/core-kit-js": "^0.0.52",
     "@types/gulp-util": "^3.0.31",
     "gulp": "^3.9.1",
     "gulp-util": "^3.0.8"
