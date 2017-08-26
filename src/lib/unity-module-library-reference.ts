@@ -56,7 +56,7 @@ export default class UnityModuleLibraryReference {
   }
 
   private async copyLibraryToAssetsAsync(
-    assemblyNames: string[], editorAssemblyNames: string[], 
+    assemblyNames: string[], editorAssemblyNames: string[],
     sourceNames: string[], editorSourceNames: string[]) {
 
     const docsSrcDir = path.join(this._nodeModule.packageDir, "Docs");
