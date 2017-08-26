@@ -54,7 +54,7 @@ export default class UnityModuleReference {
     // await this._module.project.importPackageAsync(path.join(this.artifactsPath, packageFileName));
 
     CoreKit.FileSystem.copyPatternsAsync(this.referencePath, this.installPath);
-    CoreKit.FileSystem.copyPatternsAsync(this.referencePath + ".meta", this.installPath + ".meta");
+    CoreKit.FileSystem.File.copyAsync(this.referencePath + ".meta", this.installPath + ".meta");
   }
 
   async uninstallAsync() {
