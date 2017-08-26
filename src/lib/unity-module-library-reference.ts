@@ -99,7 +99,7 @@ export default class UnityModuleLibraryReference {
         ));
     });
 
-    sourceNames.forEach(assembly => {
+    editorSourceNames.forEach(assembly => {
       const srcDir = path.join(sourceSrcDir, assembly);
       promises = promises.concat(
         CoreKit.FileSystem.copyPatternsAsync(
