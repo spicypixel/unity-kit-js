@@ -86,6 +86,7 @@ export default class UnityModuleLibraryReference {
         ));
     });
 
+    if (!editorAssemblyNames) editorAssemblyNames = [];
     editorAssemblyNames.forEach(assembly => {
       const srcDir = path.join(sourceSrcDir, assembly, "bin", "Release");
       promises = promises.concat(
@@ -96,6 +97,7 @@ export default class UnityModuleLibraryReference {
         ));
     });
 
+    if (!sourceNames) sourceNames = [];
     sourceNames.forEach(assembly => {
       const srcDir = path.join(sourceSrcDir, assembly);
       promises = promises.concat(
@@ -106,6 +108,7 @@ export default class UnityModuleLibraryReference {
         ));
     });
 
+    if (!editorSourceNames) editorSourceNames = [];
     editorSourceNames.forEach(assembly => {
       const srcDir = path.join(sourceSrcDir, assembly);
       promises = promises.concat(
