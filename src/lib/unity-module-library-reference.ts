@@ -32,8 +32,9 @@ export default class UnityModuleLibraryReference {
   async uninstallAsync() {
     // Remove files except *.meta
     await CoreKit.FileSystem.removePatternsAsync([
-      "Bin/**/*",
       "Docs/**/*",
+      "Editor/**/*",
+      "Lib/**/*",
       "MonoDoc/**/*",
       "Scripts/**/*",
       "README.md",
@@ -53,6 +54,12 @@ export default class UnityModuleLibraryReference {
       path.join(this.installPath, "Scripts"),
       { ignoreMissingSource: true, ignoreMissingDestination: true }
     );
+
+    await CoreKit.FileSystem.Directory.removeUnmatchedAsync(
+      path.join(this._nodeModule.packageDir, "Source"),
+      path.join(this.installPath, "Editor"),
+      { ignoreMissingSource: true, ignoreMissingDestination: true }
+    );
   }
 
   private async copyLibraryToAssetsAsync(
@@ -63,8 +70,8 @@ export default class UnityModuleLibraryReference {
     const sourceSrcDir = path.join(this._nodeModule.packageDir, "Source");
     const docsDestDir = path.join(this.installPath, "Docs");
     const monoDocDestDir = path.join(this.installPath, "MonoDoc");
-    const binDestDir = path.join(this.installPath, "Bin");
-    const editorDestDir = path.join(binDestDir, "Editor");
+    const libDestDir = path.join(this.installPath, "Lib");
+    const editorDestDir = path.join(this.installPath, "Editor");
     const sourceDestDir = path.join(this.installPath, "Scripts");
 
     let promises: Promise<void>[] = [];
@@ -74,7 +81,7 @@ export default class UnityModuleLibraryReference {
       promises = promises.concat(
         CoreKit.FileSystem.copyPatternsAsync(
           path.join(srcDir, assembly + ".dll"),
-          binDestDir,
+          libDestDir,
           { base: srcDir }
         ));
     });
@@ -104,7 +111,7 @@ export default class UnityModuleLibraryReference {
       promises = promises.concat(
         CoreKit.FileSystem.copyPatternsAsync(
           [path.join(srcDir, "**", "*.cs"), "!**/AssemblyInfo.cs"],
-          path.join(sourceDestDir, "Editor"),
+          editorDestDir,
           { base: sourceSrcDir }
         ));
     });
