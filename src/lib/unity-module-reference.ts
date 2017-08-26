@@ -40,8 +40,21 @@ export default class UnityModuleReference {
     }
 
     await this.uninstallAsync();
-    const packageFileName = await this.getPackageFileName();
-    await this._module.project.importPackageAsync(path.join(this.artifactsPath, packageFileName));
+
+    // Installing using the package would load Unity
+    // and package import would fail because scripts that
+    // depend on the package wouldn't find it yet.
+    //
+    // Launching Unity will also trigger a scan and
+    // remove any .metas for files that are not present.
+    //
+    // Perform a file system copy instead.
+
+    // const packageFileName = await this.getPackageFileName();
+    // await this._module.project.importPackageAsync(path.join(this.artifactsPath, packageFileName));
+
+    CoreKit.FileSystem.copyPatternsAsync(this.referencePath, this.installPath);
+    CoreKit.FileSystem.copyPatternsAsync(this.referencePath + ".meta", this.installPath + ".meta");
   }
 
   async uninstallAsync() {
