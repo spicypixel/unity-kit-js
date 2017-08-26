@@ -22,10 +22,11 @@ export default class UnityModuleLibraryReference {
 
   /** Update module with latest library */
   async installAsync(
-    assemblyNames: string[], editorAssemblyNames: string[], sourceNames: string[]) {
+    assemblyNames: string[], editorAssemblyNames?: string[],
+    sourceNames?: string[], editorSourceNames?: string[]) {
     await this.uninstallAsync();
     await this.copyLibraryToAssetsAsync(
-      assemblyNames, editorAssemblyNames, sourceNames);
+      assemblyNames, editorAssemblyNames, sourceNames, editorSourceNames);
   }
 
   async uninstallAsync() {
@@ -55,7 +56,8 @@ export default class UnityModuleLibraryReference {
   }
 
   private async copyLibraryToAssetsAsync(
-    assemblyNames: string[], editorAssemblyNames: string[], sourceNames: string[]) {
+    assemblyNames: string[], editorAssemblyNames: string[], 
+    sourceNames: string[], editorSourceNames: string[]) {
 
     const docsSrcDir = path.join(this._nodeModule.packageDir, "Docs");
     const sourceSrcDir = path.join(this._nodeModule.packageDir, "Source");
@@ -93,6 +95,16 @@ export default class UnityModuleLibraryReference {
         CoreKit.FileSystem.copyPatternsAsync(
           [path.join(srcDir, "**", "*.cs"), "!**/AssemblyInfo.cs"],
           sourceDestDir,
+          { base: sourceSrcDir }
+        ));
+    });
+
+    sourceNames.forEach(assembly => {
+      const srcDir = path.join(sourceSrcDir, assembly);
+      promises = promises.concat(
+        CoreKit.FileSystem.copyPatternsAsync(
+          [path.join(srcDir, "**", "*.cs"), "!**/AssemblyInfo.cs"],
+          path.join(sourceDestDir, "Editor"),
           { base: sourceSrcDir }
         ));
     });
