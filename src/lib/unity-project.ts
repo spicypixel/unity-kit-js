@@ -1,9 +1,10 @@
 import * as path from "path";
 import * as fs from "@spicypixel/core-kit-js/lib/file-system";
-import ChildProcess from "@spicypixel/core-kit-js/lib/child-process";
+import { default as ChildProcess, SpawnOptions } from "@spicypixel/core-kit-js/lib/child-process";
 import UnityEditor from "./unity-editor";
 
 declare var pathExists: any;
+const spawnOptions: SpawnOptions = { silentUntilError: true };
 
 export default class UnityProject {
   private _projectPath: string;
@@ -34,7 +35,7 @@ export default class UnityProject {
     args = args.concat("-createProject");
     args = args.concat(this._projectPath);
 
-    await ChildProcess.spawnAsync(UnityEditor.editorPath, args, { stdio: ["pipe", "ignore", process.stderr] });
+    await ChildProcess.spawnAsync(UnityEditor.editorPath, args, spawnOptions);
   }
 
   async exportPackageAsync(sourcePaths: string[], outputPath: string): Promise<void> {
@@ -48,7 +49,7 @@ export default class UnityProject {
     args = args.concat(sourcePaths);
     args = args.concat(outputPath);
 
-    await ChildProcess.spawnAsync(UnityEditor.editorPath, args, { stdio: ["pipe", "ignore", process.stderr] });
+    await ChildProcess.spawnAsync(UnityEditor.editorPath, args, spawnOptions);
   }
 
   async importPackageAsync(packagePath: string): Promise<void> {
@@ -68,7 +69,7 @@ export default class UnityProject {
     args = args.concat("-importPackage");
     args = args.concat(packagePath);
 
-    await ChildProcess.spawnAsync(UnityEditor.editorPath, args, { stdio: ["pipe", "ignore", process.stderr] });
+    await ChildProcess.spawnAsync(UnityEditor.editorPath, args, spawnOptions);
   }
 
   private async verifyProjectExistsAsync(): Promise<void> {

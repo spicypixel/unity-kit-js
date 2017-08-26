@@ -19,9 +19,9 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
-"@spicypixel/build-kit-js@^0.0.60":
-  version "0.0.60"
-  resolved "https://registry.npmjs.org/@spicypixel/build-kit-js/-/build-kit-js-0.0.60.tgz#1263c5ffe20bea6463515059293d343f10279a3c"
+"@spicypixel/build-kit-js@^0.0.61":
+  version "0.0.61"
+  resolved "https://registry.npmjs.org/@spicypixel/build-kit-js/-/build-kit-js-0.0.61.tgz#36fd047734118aef2fb5fea45af15bbf0282fd5d"
   dependencies:
     "@types/bluebird" "^3.5.8"
     "@types/chai" "^4.0.3"
@@ -55,16 +55,17 @@
     gulp-typescript "^3.2.1"
     gulp-util "^3.0.8"
     mocha "^3.5.0"
+    stream-cache "^0.0.2"
     tslint "^5.6.0"
     typescript "^2.4.2"
     typings "^2.1.1"
     yargs "^8.0.2"
 
-"@spicypixel/core-kit-js@^0.0.52":
-  version "0.0.52"
-  resolved "https://registry.npmjs.org/@spicypixel/core-kit-js/-/core-kit-js-0.0.52.tgz#df075294a2e30f88cf23c976777ba1dadea38c00"
+"@spicypixel/core-kit-js@^0.0.53":
+  version "0.0.53"
+  resolved "https://registry.npmjs.org/@spicypixel/core-kit-js/-/core-kit-js-0.0.53.tgz#0edbda0f606808b021390d7a4333978635fa4bb0"
   dependencies:
-    "@spicypixel/build-kit-js" "^0.0.60"
+    "@spicypixel/build-kit-js" "^0.0.61"
     "@types/glob" "^5.0.32"
     "@types/gulp-if" "^0.0.32"
     "@types/ncp" "^2.0.1"
@@ -3140,6 +3141,10 @@ split@0.3:
   resolved "http://npm.darkavalon.homeip.net/split/-/split-0.3.3.tgz#cd0eea5e63a211dfff7eb0f091c4133e2d0dd28f"
   dependencies:
     through "2"
+
+stream-cache@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/stream-cache/-/stream-cache-0.0.2.tgz#1ac5ad6832428ca55667dbdee395dad4e6db118f"
 
 stream-combiner@~0.0.4:
   version "0.0.4"
