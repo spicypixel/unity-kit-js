@@ -12,6 +12,9 @@
     "test": "gulp test",
     "mocha": "mocha"
   },
+  "files": [
+    "lib/"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/spicypixel/unity-kit-js.git"
@@ -20,8 +23,8 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "@spicypixel/build-kit-js": "^0.0.62",
-    "@spicypixel/core-kit-js": "^0.0.54",
+    "@spicypixel/build-kit-js": "^0.0.64",
+    "@spicypixel/core-kit-js": "^0.0.56",
     "@types/gulp-util": "^3.0.31",
     "gulp": "^3.9.1",
     "gulp-util": "^3.0.8"
