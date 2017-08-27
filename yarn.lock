@@ -19,9 +19,9 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
-"@spicypixel/build-kit-js@^0.0.61":
-  version "0.0.61"
-  resolved "https://registry.npmjs.org/@spicypixel/build-kit-js/-/build-kit-js-0.0.61.tgz#36fd047734118aef2fb5fea45af15bbf0282fd5d"
+"@spicypixel/build-kit-js@^0.0.62":
+  version "0.0.62"
+  resolved "https://registry.npmjs.org/@spicypixel/build-kit-js/-/build-kit-js-0.0.62.tgz#8681fe4d8efcdbd055a50a215640bf55d373e27b"
   dependencies:
     "@types/bluebird" "^3.5.8"
     "@types/chai" "^4.0.3"
@@ -61,11 +61,11 @@
     typings "^2.1.1"
     yargs "^8.0.2"
 
-"@spicypixel/core-kit-js@^0.0.53":
-  version "0.0.53"
-  resolved "https://registry.npmjs.org/@spicypixel/core-kit-js/-/core-kit-js-0.0.53.tgz#0edbda0f606808b021390d7a4333978635fa4bb0"
+"@spicypixel/core-kit-js@^0.0.54":
+  version "0.0.54"
+  resolved "https://registry.npmjs.org/@spicypixel/core-kit-js/-/core-kit-js-0.0.54.tgz#9d18575b806b7087ada30e10bea885736f36857f"
   dependencies:
-    "@spicypixel/build-kit-js" "^0.0.61"
+    "@spicypixel/build-kit-js" "^0.0.62"
     "@types/glob" "^5.0.32"
     "@types/gulp-if" "^0.0.32"
     "@types/ncp" "^2.0.1"
