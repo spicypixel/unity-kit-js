@@ -23,8 +23,8 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "@spicypixel/build-kit-js": "^0.0.64",
-    "@spicypixel/core-kit-js": "^0.0.56",
+    "@spicypixel/build-kit-js": "^0.0.65",
+    "@spicypixel/core-kit-js": "^0.0.57",
     "@types/gulp-util": "^3.0.31",
     "gulp": "^3.9.1",
     "gulp-util": "^3.0.8"
