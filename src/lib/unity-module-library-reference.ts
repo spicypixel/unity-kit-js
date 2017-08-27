@@ -102,7 +102,7 @@ export default class UnityModuleLibraryReference {
       const srcDir = path.join(sourceSrcDir, assembly);
       promises = promises.concat(
         CoreKit.FileSystem.copyPatternsAsync(
-          [path.join(srcDir, "**", "*.cs"), "!**/AssemblyInfo.cs"],
+          [path.join(srcDir, "**", "*.cs"), "!" + path.join(srcDir, "**", "AssemblyInfo.cs")],
           sourceDestDir,
           { base: sourceSrcDir }
         ));
@@ -113,7 +113,7 @@ export default class UnityModuleLibraryReference {
       const srcDir = path.join(sourceSrcDir, assembly);
       promises = promises.concat(
         CoreKit.FileSystem.copyPatternsAsync(
-          [path.join(srcDir, "**", "*.cs"), "!**/AssemblyInfo.cs"],
+          [path.join(srcDir, "**", "*.cs"), "!" + path.join(srcDir, "**", "AssemblyInfo.cs")],
           editorDestDir,
           { base: sourceSrcDir }
         ));
